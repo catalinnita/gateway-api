@@ -1,6 +1,19 @@
 # Gateway api
 
-This is a gateway for a microservices architecture. 
+This is a gateway api part of a microservices / SPA boilerplate for SAAS apps. The solution includes:
+
+* the gateway api - this one
+* stripe integration middleware api - [link]
+* react SPA app - [link]
+
+For more details about building microservices using a gateway please read https://www.nginx.com/blog/building-microservices-using-an-api-gateway/
+
+## the tech stack
+
+* node
+  * express
+  * jwt
+* mongodb
 
 ## api role
 
