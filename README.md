@@ -2,12 +2,17 @@
 
 ## enpoints
 
-`/auth/login`	
-`/auth/register`	
-`/auth/reset-password`	
+`/auth/login` 
+
+`/auth/register` 
+
+`/auth/reset-password`
+
 			
-`/blacklist/add`
-`/blacklist/delete:id`
+`/blacklist/add` 
+
+`/blacklist/delete:id` 
+
 `/blaclist/get`
 			
 ## how to install
