@@ -1,18 +1,19 @@
-# gateway api
+# Gateway api
+
+This is a gateway for a microservices architecture. In this configuration the gateway will have three roles:
+
+* authentication
+* authorization
+* routing
 
 ## enpoints
 
 `/auth/login` 
-
 `/auth/register` 
-
 `/auth/reset-password`
-
-			
+		
 `/blacklist/add` 
-
 `/blacklist/delete:id` 
-
 `/blaclist/get`
 			
 ## how to install
