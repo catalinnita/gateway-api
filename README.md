@@ -1,5 +1,17 @@
 # gateway api
 
+## enpoints
+
+/auth/login	
+/auth/register	
+/auth/reset-password	
+			
+/blacklist/add	
+/blacklist/delete:id
+/blaclist/get
+			
+## how to install
+
 git@github.com:catalinnita/gateway-api.git
 
 create .env file with these vars:\
