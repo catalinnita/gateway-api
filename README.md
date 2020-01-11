@@ -1,11 +1,25 @@
 # Gateway api
 
-This is a gateway for a microservices architecture. In this configuration the gateway will have four roles:
+This is a gateway for a microservices architecture. 
+
+## api role
+
+In this configuration the gateway will have three roles:
 
 * authentication
 * authorization
 * routing
 
+[placeholder for schema]
+
+## technical details
+
+
+## who will consume the api
+
+[links to front-end repos]
+* website checkout
+* application
 
 ## enpoints
 
@@ -41,3 +55,8 @@ npm i yarn -g
 yarn
 node server.js
 ```
+
+## contribute
+
+[link to slack channel]
+[link to trello board]
