@@ -23,7 +23,7 @@ In this configuration the gateway will have three roles:
 * authorization
 * routing
 
-[placeholder for schema]
+![gateway roles](https://github.com/catalinnita/gateway-api/blob/master/gateway.png)
 
 ## technical details
 
