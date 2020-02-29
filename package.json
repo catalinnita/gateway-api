@@ -4,7 +4,7 @@
   "description": "Authentication and authorization gateway",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "NODE_ENV=development node server.js"
   },
   "keywords": [],
   "author": "Scrambled Data",
