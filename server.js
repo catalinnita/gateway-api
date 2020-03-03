@@ -22,8 +22,7 @@ app.use('/settings', require('./redirects/redirects.controller'));
 app.use(errorHandler);
 
 // start server
-console.log(process.env.NODE_ENV);
-const port = process.env.NODE_ENV === 'production' ? process.env.PORT || 80 : 4000;
+const port = process.env.PORT || 3000;
 const server = app.listen(port, function () {
     console.log('=================');
     console.log('GATEWAY:' + port);
