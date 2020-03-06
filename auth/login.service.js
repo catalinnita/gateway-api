@@ -5,8 +5,8 @@ const bcrypt = require('bcryptjs');
 const db = require('../_db/db');
 const User = db.User;
 
-async function login({ username, password }) {
-    const user = await User.findOne({ username });
+async function login({ email, password }) {
+    const user = await User.findOne({ email });
     if (user && bcrypt.compareSync(password, user.hash)) {
         const { hash, ...userWithoutHash } = user.toObject();
         const token = jwt.sign({ sub: user.id }, process.env.SECRET_KEY);
