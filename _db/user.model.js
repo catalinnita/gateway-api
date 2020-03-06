@@ -19,15 +19,14 @@ const schema = new Schema({
     	type: Date, 
     	default: Date.now 
     }
+}, {
+	writeConcern: {
+	w: 'majority',
+	j: true,
+	wtimeout: 1000,
+	},
 });
 
-schema.set('toJSON', { 
-	virtuals: true,
-	writeConcern: {
-		w: 'majority',
-		j: true,
-		wtimeout: 1000
-	}, 
-});
+schema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('User', schema);
