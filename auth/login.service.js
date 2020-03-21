@@ -8,11 +8,13 @@ const User = db.User;
 async function login({ email, password }) {
     const user = await User.findOne({ email });
     if (user && bcrypt.compareSync(password, user.hash)) {
-        const { hash, ...userWithoutHash } = user.toObject();
+        const { name, email, createdDate } = user.toObject();
         const token = jwt.sign({ sub: user.id }, process.env.SECRET_KEY);
         return {
-            ...userWithoutHash,
-            token
+            name,
+            email,
+            createdDate,
+            token,
         };
     }
 }
