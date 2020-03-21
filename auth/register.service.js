@@ -1,19 +1,19 @@
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('../_db/db');
 const User = db.User;
 
-async function createAccount(userParam) {
+async function createAccount({ name, email, password }) {
     // validates
-    if (await User.findOne({ email: userParam.email })) {
-        throw 'Email "' + userParam.email + '" is already taken';
+    if (await User.findOne({ email })) {
+        throw 'Email "' + email + '" is already taken';
     }
-
-    const user = new User(userParam);
+    
+    // create new user
+    const user = new User({ name, email, password });
 
     // hash password
-    if (userParam.password) {
-        user.hash = bcrypt.hashSync(userParam.password, 10);
+    if (password) {
+        user.hash = bcrypt.hashSync(password, 10);
     }
 
     // save user
