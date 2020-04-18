@@ -1,9 +1,25 @@
-const loginService = require('./login.service');
+import doLogin from './login.service.js';
+import { generateToken } from '../_helpers/jwt.js';
 
-function login(req, res, next) {
-      loginService(req.body)
-        .then(user => user ? res.json(user) : res.status(400).json({ message: 'Email or password is incorrect' }))
-        .catch(err => next(err));
+const loginController = async (req, res, next) => {
+  try {
+    // do the login
+    const user = await doLogin(req.body);
+
+    // generate token using user object
+    const token = generateToken(user);
+
+    // if there is a user with a sunbscription return the user object including token
+    if (user.subscriptionId) {
+      return res.status(200).json(token);
+    }
+
+    // go to subscription creation
+    next();
+
+  } catch (err) {
+    next(err);
+  }
 }
 
-module.exports = login;
+export default loginController;

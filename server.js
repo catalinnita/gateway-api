@@ -1,8 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const jwt = require('./_helpers/jwt');
-const errorHandler = require('./_helpers/error-handler');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import { jsonWebToken } from './_helpers/jwt.js';
+import { errorHandler } from './_helpers/error-handler.js';
+import { authRoutes } from './auth/routes.js';
 
 const app = express();
 
@@ -11,20 +12,18 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // use JWT auth to secure the api
-app.use(jwt());
+app.use(jsonWebToken());
 
 // api routes
-app.use('/auth', require('./auth/auth.routes'));
-app.use('/subs', require('./redirects/redirects.controller'));
-app.use('/settings', require('./redirects/redirects.controller'));
+app.use('/auth', authRoutes);
 
 // global error handler
 app.use(errorHandler);
 
 // start server
 const port = process.env.PORT || 3000;
-const server = app.listen(port, function () {
+app.listen(port, function () {
     console.log('=================');
     console.log('GATEWAY:' + port);
-    console.log('=================');    
+    console.log('=================');
 });

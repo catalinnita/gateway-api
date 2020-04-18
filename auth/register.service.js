@@ -1,27 +1,32 @@
-const bcrypt = require('bcryptjs');
-const db = require('../_db/db');
+import db from '../_db/db.js';
+import { createStripeCustomer } from '../_helpers/stripe.js';
+import { hashPassword } from '../_helpers/password.js';
+
 const User = db.User;
 
-async function createAccount({ name, email, password }) {
-    // validates
-    if (await User.findOne({ email })) {
-        throw 'Email "' + email + '" is already taken';
-    }
-    
-    // create new user
-    const user = new User({ name, email, password });
-
-    // hash password
-    if (password) {
-        user.hash = bcrypt.hashSync(password, 10);
-    }
-
-    // save user
-    await user.save();
+const userExists = async ({ email }) => {
+  return await User.findOne({ email });
 }
 
-async function getById(id) {
-    return await User.findById(id).select('-hash');
+const saveAccountData = async ({ name, email, password, customerId }) => {
+  const userData = {
+      name,
+      email,
+      password: hashPassword(password),
+      customerId,
+  }
+  const user = new User(userData);
+  await user.save();
+
+  return user._doc;
 }
 
-module.exports = createAccount;
+
+const createAccount = async ({ name, email, password }) => {
+  const customerId = await createStripeCustomer({ name, email });
+  const user = await saveAccountData({ name, email, password, customerId })
+
+  return user;
+}
+
+export { createAccount, userExists };

@@ -1,9 +1,32 @@
-const registerService = require('./register.service');
+import config from './config.js';
+import { createAccount, userExists } from './register.service.js';
+import { generateToken } from '../_helpers/jwt.js';
 
-function register(req, res, next) {
-    registerService(req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+const registerController = async (req, res, next) => {
+  try {
+
+    // if there is an account with the email throw an error
+    if (await userExists(req.body)) {
+      return res.status(200).json({ redirect: '/login' });
+    }
+
+    // create account including stripe customer
+    const user = await createAccount(req.body);
+
+    // generate token using user object
+    const token = generateToken(user);
+
+    // if payment is required redirect to payment
+    if (config.requiredCreditCardTrial) {
+      return res.status(200).json(token);
+    }
+
+    // go to subscription creation
+    next();
+
+  } catch(err) {
+    next(err);
+  }
 }
 
-module.exports = register;
+export default registerController;

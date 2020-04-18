@@ -1,27 +1,41 @@
-const expressJwt = require('express-jwt');
-const db = require('../_db/db');
+import expressJwt from 'express-jwt';
+import jwt from 'jsonwebtoken';
+import db from '../_db/db.js';
+
 const User = db.User;
 
-module.exports = jwt;
+const isRevokedCallback = async (req, payload, done) => {
+  const user = await User.findOne({ email: payload.email }).select('customerId');
 
-function jwt() {
-    const secret = process.env.SECRET_KEY;
-    return expressJwt({ secret, isRevoked }).unless({
-        path: [
-            // public registerroutes that don't require authentication
-            '/auth/login',
-            '/auth/register'
-        ]
-    });
+  // revoke token if user no longer exists
+  if (!user) {
+    return done(null, true);
+  }
+
+  done();
+};
+
+const jsonWebToken = () => {
+  return expressJwt({
+    secret: process.env.SECRET_KEY,
+    isRevoked: isRevokedCallback,
+  }).unless({
+    path: [
+      // public registerroutes that don't require authentication
+      '/auth/login',
+      '/auth/register'
+    ]
+  });
 }
 
-async function isRevoked(req, payload, done) {
-    const user = await User.findById(payload.sub).select('-hash');
+const generateToken = (user) => {
+  const { name, email, customerId, subscriptionId, createdDate } = user;
+  const parsedUser = { name, email, customerId, subscriptionId, createdDate };
 
-    // revoke token if user no longer exists
-    if (!user) {
-        return done(null, true);
-    }
+  return jwt.sign(parsedUser, process.env.SECRET_KEY);
+}
 
-    done();
+export {
+  jsonWebToken,
+  generateToken
 };
