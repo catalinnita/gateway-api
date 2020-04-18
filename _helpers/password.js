@@ -4,4 +4,6 @@ const hashPassword = (password) => {
   return bcrypt.hashSync(password, 10);
 }
 
-export { hashPassword };
+export {
+  hashPassword
+};

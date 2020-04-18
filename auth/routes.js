@@ -4,12 +4,12 @@ import registerController from './register.controller.js';
 import paymentController from './payment.controller.js';
 import subscriptionController from './subscription.controller.js';
 
-const authRouter = express.Router();
+const authRoutes = express.Router();
 
-authRouter.post('/login', [loginController, subscriptionController]);
-authRouter.post('/register', [registerController, subscriptionController]);
-authRouter.post('/payment', [paymentController, subscriptionController]);
+authRoutes.post('/login', [loginController, subscriptionController]);
+authRoutes.post('/register', [registerController, subscriptionController]);
+authRoutes.post('/payment', [paymentController, subscriptionController]);
 
-export default {
-  authRouter
+export {
+  authRoutes
 }

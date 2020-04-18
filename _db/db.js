@@ -12,9 +12,7 @@ mongoose.connect(
     useNewUrlParser: true,
     useCreateIndex: true,
   });
-  
+
 mongoose.Promise = global.Promise;
 
-export default {
-  User
-};
+export default User;
